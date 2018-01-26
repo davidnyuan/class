@@ -5,18 +5,27 @@ library(dplyr)
 library(ggplot2)
 
 # Read, and then `source` the data-prep.R file. The `all.data` variable is now available
-
+source('./data-prep.R')
 
 # Create a column of percentage of registered voters who voted
-
+View(all.data)
+all.datea <- all.data %>%
+                mutate(pct.voted = total.voted/registered.votes)
 
 # Start by making a new `ggplot` with `all.data` as the data (no geometry yet)
 # What do you see?
 
+hist(all.data$pct.voted)
+plot(all.data$total.population, all.data$pct.voted)
 
 # Draw a scatter plot (with point geometry) with for the `all.data` set, 
 # with the `total.population` mapped to the x-position and `registerd.voters` mapped to the y-position.
 
+ggplot(data = all.data) + 
+  geom_point(mapping=aes(x=total.population, y=registered.voters))
+
+ggplot(data = all.data) + 
+  geom_point(mapping=aes(x=registered.voters, y=pct.voted, color=total.population), color='blue')
 
 # Draw a scatter plot (with point geometry) with for the `all.data` set, 
 # with the `total.population` mapped to the x-position and `pct.voted` mapped to the y-position.
